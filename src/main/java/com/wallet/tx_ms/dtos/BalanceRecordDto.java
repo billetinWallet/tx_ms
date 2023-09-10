@@ -6,5 +6,5 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record BalanceRecordDto(@NotNull int id_balance, @NotNull float balance, @NotNull LocalDateTime update_time, @NotNull
-                               UserModel user) {
+                               UserModel id_user) {
 }

@@ -21,7 +21,7 @@ public class BalanceModel {
 
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)
-    private UserModel user;
+    private UserModel id_user;
 
     public int getId_balance() {
         return id_balance;
@@ -47,11 +47,11 @@ public class BalanceModel {
         this.update_time = LocalDateTime.now();
     }
 
-    public UserModel getUser() {
-        return user;
+    public UserModel getId_user() {
+        return id_user;
     }
 
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setId_user(UserModel id_user) {
+        this.id_user = id_user;
     }
 }
