@@ -28,4 +28,4 @@ In order to communicate with the API, the following endpoints are created (all e
     - /balance -> This endpoint will dissapear in future implementations
 
 Image example of an endpoint (All other images are stored in the folder endpoints_images)
-![endpoint recharge](https://github.com/billetinWallet/tx_ms/blob/feature/transactions_triggers_and_some_logic/endpoints_images/post_recharges.png)
+![endpoint recharge](https://github.com/billetinWallet/tx_ms/blob/main/endpoints_images/post_recharges.png)
