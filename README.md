@@ -2,25 +2,25 @@
 
 In order to communicate with the API, the following endpoints are created (all endpoints are accesed through url:port and the endpoint name described below).
 
-- User entity:
+1. User entity:
   - GET:
     - /users
     - /users/id_user
   - POST:
     - /users
-- Recharge entity:
+2. Recharge entity:
   - GET y POST:
     - /recharges
-- Payment entity:
+3. Payment entity:
   - GET y POST:
     - /payments
-- Movement view:
+4. Movement view:
   - GET:
     - /movements
-- Internal transaction entity:
+5. Internal transaction entity:
   - GET y POST:
     - /internal_transactions
-- Balance entity:
+6. Balance entity:
   - GET:
     - /balance
     - /balance/id_user -> Shows the current balance of the user identified with id_user.
