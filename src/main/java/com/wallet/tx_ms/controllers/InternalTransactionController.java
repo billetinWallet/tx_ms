@@ -3,6 +3,7 @@ package com.wallet.tx_ms.controllers;
 
 import com.wallet.tx_ms.dtos.InternalTransactionRecordDto;
 import com.wallet.tx_ms.models.InternalTransactionModel;
+import com.wallet.tx_ms.repositories.BalanceRepository;
 import com.wallet.tx_ms.repositories.InternalTransactionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

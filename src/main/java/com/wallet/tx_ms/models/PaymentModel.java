@@ -56,7 +56,7 @@ public class PaymentModel {
     }
 
     public void setState(char state) {
-        this.state = state;
+        this.state = 'A';
     }
 
     public UserModel getId_user() {

@@ -76,6 +76,6 @@ public class InternalTransactionModel {
     }
 
     public void setState(char state) {
-        this.state = state;
+        this.state = 'A';
     }
 }

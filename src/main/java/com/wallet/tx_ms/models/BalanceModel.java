@@ -13,7 +13,7 @@ public class BalanceModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_balance;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "FLOAT UNSIGNED")
     private float balance;
 
     @Column(nullable = false)
