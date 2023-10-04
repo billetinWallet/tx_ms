@@ -56,7 +56,7 @@ public class RechargeModel {
     }
 
     public void setState(char state) {
-        this.state = 'A';
+        this.state = state;
     }
 
     public UserModel getId_user() {
