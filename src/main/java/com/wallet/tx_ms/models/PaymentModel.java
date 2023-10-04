@@ -21,7 +21,7 @@ public class PaymentModel {
     private LocalDateTime datetime;
 
     @Column(nullable = false, length = 1)
-    private char state;
+    private char state='P';
 
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)
@@ -56,7 +56,7 @@ public class PaymentModel {
     }
 
     public void setState(char state) {
-        this.state = 'A';
+        this.state = state;
     }
 
     public UserModel getId_user() {
