@@ -19,6 +19,14 @@ public class MovementModel {
     @Column(nullable = false)
     private LocalDateTime datetime;
 
+    public UserModel getId_user() {
+        return id_user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private UserModel id_user;
+
     public UUID getId_movement() {
         return id_movement;
     }
