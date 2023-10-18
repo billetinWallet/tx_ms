@@ -19,6 +19,13 @@ public class MovementModel {
     @Column(nullable = false)
     private LocalDateTime datetime;
 
+    @Column(nullable = false)
+    private char state;
+
+    public char getState() {
+        return state;
+    }
+
     public UserModel getId_user() {
         return id_user;
     }
