@@ -35,4 +35,10 @@ public class UserController {
         Optional<UserModel> user = userRepository.findById(id);
         return user.<ResponseEntity<Object>>map(userModel -> ResponseEntity.status(HttpStatus.OK).body(userModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist"));
     }
+
+    @GetMapping("/users/getId/{document}")
+    public ResponseEntity<Object> getUserId(@PathVariable(value="document") int document){
+        Optional<UserModel> user = userRepository.getUserId(document);
+        return user.<ResponseEntity<Object>>map(userModel -> ResponseEntity.status(HttpStatus.OK).body(userModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist"));
+    }
 }

@@ -6,6 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record MovementRecordDto(@NotNull UUID id_movement, @NotNull float amount, @NotNull LocalDateTime datetime, @NotNull
+public record MovementRecordDto(@NotNull UUID id_movement, @NotNull float amount, @NotNull LocalDateTime datetime, @NotNull char state, @NotNull
                                 UserModel id_user) {
 }
