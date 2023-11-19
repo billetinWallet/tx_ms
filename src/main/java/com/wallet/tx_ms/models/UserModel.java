@@ -3,8 +3,6 @@ package com.wallet.tx_ms.models;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "USER")
 public class UserModel{

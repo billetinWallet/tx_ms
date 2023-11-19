@@ -2,9 +2,9 @@ package com.wallet.tx_ms.controllers;
 
 
 import com.wallet.tx_ms.dtos.PaymentRecordDto;
-import com.wallet.tx_ms.models.MovementModel;
 import com.wallet.tx_ms.models.PaymentModel;
 import com.wallet.tx_ms.repositories.PaymentRepository;
+import com.wallet.tx_ms.security.Validator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +21,10 @@ public class PaymentController {
     PaymentRepository paymentRepository;
 
     @PostMapping("/payments")
-    public ResponseEntity<PaymentModel> createPayment(@RequestBody PaymentRecordDto paymentRecordDto){
+    public ResponseEntity<Object> createPayment(@RequestHeader("Authorization") String bearer, @RequestBody PaymentRecordDto paymentRecordDto){
+        if(Validator.validateToken(bearer) == false){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
+        }
         var paymentModel = new PaymentModel();
         BeanUtils.copyProperties(paymentRecordDto, paymentModel);
         paymentModel.setState('P');
@@ -30,12 +32,18 @@ public class PaymentController {
     }
 
     @GetMapping("/payments")
-    public ResponseEntity<List<PaymentModel>> getPayments(){
+    public ResponseEntity<Object> getPayments(@RequestHeader("Authorization") String bearer){
+        if(Validator.validateToken(bearer) == false){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(paymentRepository.findAll());
     }
 
     @PatchMapping("/payments/{id_payment}/{state}")
-    public ResponseEntity<PaymentModel> updatePayment(@PathVariable(value="id_payment") UUID id_payment, @PathVariable(value="state") char state){
+    public ResponseEntity<Object> updatePayment(@RequestHeader("Authorization") String bearer, @PathVariable(value="id_payment") UUID id_payment, @PathVariable(value="state") char state){
+        if(Validator.validateToken(bearer) == false){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
+        }
         try{
             PaymentModel payment = paymentRepository.findById(id_payment).get();
             if (payment.getState()!='P')
@@ -43,7 +51,7 @@ public class PaymentController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
             payment.setState(state);
-            return new ResponseEntity<PaymentModel>(paymentRepository.save(payment), HttpStatus.OK);
+            return new ResponseEntity<Object>(paymentRepository.save(payment), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
