@@ -20,9 +20,11 @@ public class PaymentController {
     @Autowired
     PaymentRepository paymentRepository;
 
+    @Autowired
+    Validator validator;
     @PostMapping("/payments")
     public ResponseEntity<Object> createPayment(@RequestHeader("Authorization") String bearer, @RequestBody PaymentRecordDto paymentRecordDto){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         var paymentModel = new PaymentModel();
@@ -33,7 +35,7 @@ public class PaymentController {
 
     @GetMapping("/payments")
     public ResponseEntity<Object> getPayments(@RequestHeader("Authorization") String bearer){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         return ResponseEntity.status(HttpStatus.OK).body(paymentRepository.findAll());
@@ -41,7 +43,7 @@ public class PaymentController {
 
     @PatchMapping("/payments/{id_payment}/{state}")
     public ResponseEntity<Object> updatePayment(@RequestHeader("Authorization") String bearer, @PathVariable(value="id_payment") UUID id_payment, @PathVariable(value="state") char state){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         try{

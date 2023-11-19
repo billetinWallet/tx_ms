@@ -16,9 +16,12 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    Validator validator;
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@RequestHeader("Authorization") String bearer, @RequestBody UserRecordDto userRecordDto){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         var userModel = new UserModel();
@@ -28,7 +31,7 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<Object> getAllUsers(@RequestHeader("Authorization") String bearer){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
@@ -36,7 +39,7 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Object> getUser(@RequestHeader("Authorization") String bearer, @PathVariable(value="id") int id){
-        if(Validator.validateUser(bearer, Integer.toString(id)) == false){
+        if(validator.validateUser(bearer, Integer.toString(id)) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         Optional<UserModel> user = userRepository.findById(id);
@@ -45,7 +48,7 @@ public class UserController {
 
     @GetMapping("/users/getId/{document}")
     public ResponseEntity<Object> getUserId(@RequestHeader("Authorization") String bearer, @PathVariable(value="document") int document){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         Optional<UserModel> user = userRepository.getUserId(document);
