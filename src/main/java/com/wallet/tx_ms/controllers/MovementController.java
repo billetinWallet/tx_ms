@@ -20,9 +20,12 @@ public class MovementController{
     @Autowired
     MovementRepository movementRepository;
 
+    @Autowired
+    Validator validator;
+
     @PostMapping("/movements")
     public ResponseEntity<Object> createMovement(@RequestHeader("Authorization") String bearer, @RequestBody MovementRecordDto movementRecordDto){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         var movementModel = new MovementModel();
@@ -32,7 +35,7 @@ public class MovementController{
 
     @GetMapping("/movements")
     public ResponseEntity<Object> getMovements(@RequestHeader("Authorization") String bearer){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         return ResponseEntity.status(HttpStatus.OK).body(movementRepository.findAll());
@@ -40,7 +43,7 @@ public class MovementController{
 
     @GetMapping("/movements/{id_user}")
     public ResponseEntity<Object> getUser(@RequestHeader("Authorization") String bearer, @PathVariable(value="id_user") int id_user){
-        if(Validator.validateUser(bearer, Integer.toString(id_user)) == false){
+        if(validator.validateUser(bearer, Integer.toString(id_user)) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         Optional<List<MovementModel>> movements = movementRepository.findByUserId(id_user);

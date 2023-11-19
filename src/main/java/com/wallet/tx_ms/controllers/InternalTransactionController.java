@@ -19,9 +19,11 @@ public class InternalTransactionController {
     @Autowired
     InternalTransactionRepository internalTransactionRepository;
 
+    @Autowired
+    Validator validator;
     @PostMapping("/internal_transactions")
     public ResponseEntity<Object> createInternalTransaction(@RequestHeader("Authorization") String bearer, @RequestBody InternalTransactionRecordDto internalTransactionRecordDto){
-        if(Validator.validateUser(bearer, Integer.toString(internalTransactionRecordDto.source_account().getId_user())) == false){
+        if(validator.validateUser(bearer, Integer.toString(internalTransactionRecordDto.source_account().getId_user())) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         var internalTransactionModel = new InternalTransactionModel();
@@ -31,7 +33,7 @@ public class InternalTransactionController {
 
     @GetMapping("/internal_transactions")
     public ResponseEntity<Object> getInternalTransactions(@RequestHeader("Authorization") String bearer){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         return ResponseEntity.status(HttpStatus.OK).body(internalTransactionRepository.findAll());

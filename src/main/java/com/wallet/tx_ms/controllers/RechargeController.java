@@ -20,9 +20,11 @@ public class RechargeController {
     @Autowired
     RechargeRepository rechargeRepository;
 
+    @Autowired
+    Validator validator;
     @PostMapping("/recharges")
     public ResponseEntity<Object> createRecharge(@RequestHeader("Authorization") String bearer, @RequestBody RechargeRecordDto rechargeRecordDto){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         var rechargeModel = new RechargeModel();
@@ -33,7 +35,7 @@ public class RechargeController {
 
     @GetMapping("/recharges")
     public ResponseEntity<Object> getRecharges(@RequestHeader("Authorization") String bearer){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         return ResponseEntity.status(HttpStatus.OK).body(rechargeRepository.findAll());
@@ -41,7 +43,7 @@ public class RechargeController {
 
     @PatchMapping("/recharges/{id_recharge}/{state}")
     public ResponseEntity<Object> updateRecharge(@RequestHeader("Authorization") String bearer, @PathVariable(value="id_recharge") UUID id_recharge, @PathVariable(value="state") char state){
-        if(Validator.validateToken(bearer) == false){
+        if(validator.validateToken(bearer) == false){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized user");
         }
         try{
