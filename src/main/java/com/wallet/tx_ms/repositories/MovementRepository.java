@@ -1,6 +1,5 @@
 package com.wallet.tx_ms.repositories;
 
-import com.wallet.tx_ms.models.BalanceModel;
 import com.wallet.tx_ms.models.MovementModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
